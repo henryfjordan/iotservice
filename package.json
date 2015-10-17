@@ -2,7 +2,7 @@
   "name": "iotstack",
   "version": "0.0.1",
   "description": "An IoT stack implementation",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,8 +10,13 @@
   "license": "MIT",
   "dependencies": {
     "hapi": "^11.0.0",
+    "inert": "^3.1.0",
     "javascript-state-machine": "^2.3.5",
+    "path": "^0.12.7",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "requests": "^0.1.7",
     "rethinkdb": "^2.1.1"
-  }
+  },
+  "devDependencies": {}
 }
