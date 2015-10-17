@@ -1,0 +1,17 @@
+{
+  "name": "iotstack",
+  "version": "0.0.1",
+  "description": "An IoT stack implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Henry Jordan",
+  "license": "MIT",
+  "dependencies": {
+    "hapi": "^11.0.0",
+    "javascript-state-machine": "^2.3.5",
+    "requests": "^0.1.7",
+    "rethinkdb": "^2.1.1"
+  }
+}
