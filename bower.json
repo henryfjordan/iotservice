@@ -1,0 +1,24 @@
+{
+  "name": "iotstack",
+  "description": "An IoT stack implementation",
+  "main": "server.js",
+  "authors": [
+    "Henry Jordan"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/henryfjordan/iotstack",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material-ui": "~0.12.3",
+    "react": "~0.14.0",
+    "material-design-lite": "~1.0.5"
+  }
+}
