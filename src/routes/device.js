@@ -18,12 +18,6 @@ r.connect(
     }
 )
 
-var ge_link_state = schema({
-    power: Boolean,
-    brightness: Number.min(0).max(1)
-});
-
-
 module.exports = [
     {
         /* Return a list of all devices */
