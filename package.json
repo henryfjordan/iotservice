@@ -18,5 +18,9 @@
     "requests": "^0.1.7",
     "rethinkdb": "^2.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "bower": "^1.6.3",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.4"
+  }
 }
