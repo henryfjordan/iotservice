@@ -4,7 +4,11 @@ var Path = require('path');
 //var requests = require('requests');
 //var fsm = require('javascript-state-machine');
 
-var routes = require('./src/routes/device');
+var device_routes = require('./src/routes/device');
+var site_routes = require('./src/routes/site');
+
+var devices = require('./src/devices');
+
 
 var server = new Hapi.Server({
     connections: {
@@ -15,46 +19,13 @@ var server = new Hapi.Server({
         }
     }
 });
-
 server.connection({ port: 5050 });
 
-server.route(routes);
+server.route(device_routes);
 
 server.register(require('inert'), function (err) {
-
-    if (err) {
-        throw err;
-    }
-
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: {
-            file: 'src/assets/html/index.html'
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/static/{param*}',
-        handler: {
-            directory: {
-                path: 'bower_components/'
-            }
-        }
-    });
-
-    server.route({
-        method: 'GET',
-        path: '/assets/{file}',
-        handler: {
-            directory: {
-                path: 'assets/'
-            }
-        }
-    });
-
-
+    if (err) throw err;
+    server.route(site_routes);
 });
 
 server.start(function () {

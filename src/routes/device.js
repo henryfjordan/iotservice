@@ -1,9 +1,13 @@
 var r = require('rethinkdb');
 var shema = require('js-schema');
 
+// Get list of devices
+var devices = require('../devices');
+
+console.log(devices);
+
 // Connect to the DB on import
 var localhost = null;
-
 r.connect(
     {
         host: 'localhost',
@@ -18,11 +22,13 @@ r.connect(
 
 var ge_link_state = schema({
     power: Boolean,
-
+    brightness: Number.min(0).max(1)
 });
+
 
 module.exports = [
     {
+        /* Return a list of all devices */
         method: 'GET',
         path: '/device',
         handler: function(request, reply) {
@@ -39,6 +45,7 @@ module.exports = [
         }
     },
     {
+        /* Return a list of all devices of a type */
         method: 'GET',
         path: '/device/{type}',
         handler: function (request, reply) {
@@ -56,6 +63,7 @@ module.exports = [
         }
     },
     {
+        /* Return a specific device */
         method: 'GET',
         path: '/device/{type}/{name}',
         handler: function (request, reply) {
@@ -78,32 +86,33 @@ module.exports = [
         }
     },
     {
+        /* Update a specific device */
         method: 'POST',
         path: '/device/{device}/{name}',
         handler: function (request, reply) {
 
-            console.log(request.payload);
+            console.log(request.params.device);
+            console.log(devices[request.params.device]);
+            console.log(devices[request.params.device].schema(request.payload));
 
-            if(!ge_link_state(request.payload)) {
-                reply(request.payload + "dup\n");
+            // Return bad request if payload doesn't validate
+            // Note this method only works for lights so far
+            if(! devices[request.params.device].schema(request.payload)) {
+                reply("Bad Payload").code(400);
                 return;
             }
 
             r.table('devices')
             .filter({name: request.params.name})
-            .update({scope: request.payload})
+            .update({
+                state: request.payload,
+                last_updated: r.now()
+            })
             .run(localhost, function(err, cursor) {
                 if (err) reply(err);
-                cursor.toArray(function(err, result) {
-                    if (err) reply(err);
-                    if (result.length > 0 && result[0].type == request.params.type) {
-                        reply(JSON.stringify(result, null, 2));
-                    } else {
-                        reply('device group not found');
-                    }
-
-                });
+                reply(cursor);
             });
+
         }
     }
 ];

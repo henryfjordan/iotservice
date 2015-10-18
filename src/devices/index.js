@@ -1,5 +1,5 @@
-var GELink = require('./GELink')
+var ge_link = require('./ge_link');
 
 module.exports = {
-    GELink: GELink,
+    ge_link: ge_link,
 }
