@@ -11,13 +11,13 @@ module.exports = {
     name: 'bedroom_lamp',
     last_updated: 'Sun Oct 18 2015 04:19:14 GMT+00:00',
     state: {
-        power: false,
+        powered: false,
         brightness: 1.0
     },
 
     // Device state schema definition
     schema: schema({
-        power: Boolean,
+        powered: Boolean,
         brightness: Number.min(0).max(1)
     }),
 
@@ -28,8 +28,23 @@ module.exports = {
         .changes().run(conn, function(err, cursor) {
           cursor.each(function(err, row) {
               if (err) throw err;
-              console.log(row);
-          });
+
+              request({
+                  url: "https://winkapi.quirky.com/light_bulbs/871605",
+                  body: "{\"desired_state\":" +  JSON.stringify(row['new_val']['state']) + "\n}",
+                  headers: {"Content-Type": "application/json", "Authorization": "Bearer 597df5176ccb8b341b0bec9a5979edaf"},
+                  method: "PUT"
+                }, function (error, response, body) {
+                    if (!response.statusCode == 200) {
+                        if (error) throw error;
+
+                        console.log("Status", response.statusCode);
+                        console.log("Headers", JSON.stringify(response.headers));
+                        console.log("Response received", body);
+                    }
+                });
+
+            });
         });
     }
 };
