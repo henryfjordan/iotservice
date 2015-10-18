@@ -7,9 +7,6 @@ var Path = require('path');
 var device_routes = require('./src/routes/device');
 var site_routes = require('./src/routes/site');
 
-var devices = require('./src/devices');
-
-
 var server = new Hapi.Server({
     connections: {
         routes: {

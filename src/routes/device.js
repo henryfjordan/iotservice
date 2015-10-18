@@ -4,8 +4,6 @@ var shema = require('js-schema');
 // Get list of devices
 var devices = require('../devices');
 
-console.log(devices);
-
 // Connect to the DB on import
 var localhost = null;
 r.connect(
@@ -91,12 +89,7 @@ module.exports = [
         path: '/device/{device}/{name}',
         handler: function (request, reply) {
 
-            console.log(request.params.device);
-            console.log(devices[request.params.device]);
-            console.log(devices[request.params.device].schema(request.payload));
-
             // Return bad request if payload doesn't validate
-            // Note this method only works for lights so far
             if(! devices[request.params.device].schema(request.payload)) {
                 reply("Bad Payload").code(400);
                 return;
