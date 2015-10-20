@@ -32,16 +32,15 @@ module.exports = {
               request({
                   url: "https://winkapi.quirky.com/light_bulbs/871605",
                   body: "{\"desired_state\":" +  JSON.stringify(row['new_val']['state']) + "\n}",
-                  headers: {"Content-Type": "application/json", "Authorization": "Bearer 597df5176ccb8b341b0bec9a5979edaf"},
+                  headers: {"Content-Type": "application/json", "Authorization": "Bearer c94b6e65f461161b627dd1e8b00cb39a"},
                   method: "PUT"
                 }, function (error, response, body) {
-                    if (!response.statusCode == 200) {
-                        if (error) throw error;
+
 
                         console.log("Status", response.statusCode);
                         console.log("Headers", JSON.stringify(response.headers));
                         console.log("Response received", body);
-                    }
+
                 });
 
             });
