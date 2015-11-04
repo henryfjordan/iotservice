@@ -61,20 +61,15 @@ module.exports = [
         handler: function (request, reply) {
 
             r.table('devices')
-            .filter({name: request.params.name})
+            .get(request.params.name)
             .run(localhost, function(err, cursor) {
                 if (err) reply(err);
-                cursor.toArray(function(err, result) {
-                    if (err) reply(err);
-                    if (result.length > 0 && result[0].type == request.params.type) {
-                        reply(JSON.stringify(result, null, 2));
-                    } else {
-                        reply('device group not found');
-                    }
-
-                });
+                if (cursor) {
+                    reply(cursor);
+                } else {
+                    reply("Not Found").code(404);
+                }
             });
-
         }
     },
     {
@@ -84,7 +79,7 @@ module.exports = [
         handler: function (request, reply) {
 
             // Return bad request if payload doesn't validate
-            if(! devices[request.params.device].schema(request.payload)) {
+            if (!devices[request.params.device].schema(request.payload)) {
                 reply("Bad Payload").code(400);
                 return;
             }
