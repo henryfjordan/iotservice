@@ -30,6 +30,9 @@ var server = new Hapi.Server({
             files: {
                 relativeTo: Path.join(__dirname, '.')
             }
+        },
+        router: {
+            stripTrailingSlash: true
         }
     }
 });
