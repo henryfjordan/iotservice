@@ -11,12 +11,7 @@
   "dependencies": {
     "hapi": "^11.0.0",
     "inert": "^3.1.0",
-    "javascript-state-machine": "^2.3.5",
-    "joi": "^6.9.1",
     "js-schema": "^1.0.1",
-    "material-ui": "^0.12.3",
-    "path": "^0.12.7",
-    "react": "^0.13.3",
     "request": "^2.65.0",
     "rethinkdb": "^2.1.1"
   },
