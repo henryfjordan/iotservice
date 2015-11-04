@@ -17,8 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "material-ui": "~0.12.3",
-    "react": "~0.14.0",
-    "material-design-lite": "~1.0.5"
+    "angular-material": "~0.11.4"
   }
 }
