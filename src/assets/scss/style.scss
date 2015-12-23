@@ -1,13 +1,16 @@
-.demo-card-square.mdl-card {
-  width: 320px;
-  height: 320px;
+html,
+body {
+    background-color: #09f;
 }
-.demo-card-square > .mdl-card__title {
-  color: #fff;
-  background:
-    url('lamp.png') bottom right 15% no-repeat #46B6AC;
+.ng-cloak {
+    display: none !important;
 }
-
-.mdl-slider {
-    
+#ge-link {
+    margin: 100px auto 0;
+    width: 500px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+    border: 1px solid #000;
+    md-slider {
+        width: 200px;
+    }
 }

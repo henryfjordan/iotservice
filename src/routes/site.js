@@ -23,5 +23,14 @@ module.exports = [
                 path: 'assets/'
             }
         }
+    },
+    {
+        method: 'GET',
+        path: '/src/{file*}',
+        handler: {
+            directory: {
+                path: 'src/'
+            }
+        }
     }
 ];

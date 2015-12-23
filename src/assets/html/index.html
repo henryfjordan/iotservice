@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/static/angular-material/angular-material.css">
+    <link rel="stylesheet" href="/assets/style.css">
 </head>
-    <body ng-app="YourApp">
 
-        <div ng-controller="YourController">
-            Hello
-        </div>
+<body ng-app="DeviceApp">
 
-        <script src="/static/angular/angular.js"></script>
-        <script src="/static/angular-aria/angular-aria.js"></script>
-        <script src="/static/angular-animate/angular-animate.js"></script>
-        <script src="/static/angular-material/angular-material.js"></script>
-        <script>
+    <div ng-controller="DeviceController">
 
-            // Include app dependency on ngMaterial
+        <md-card id="ge-link" class="ng-cloak">
+            <md-card-content>
+                <h2>{{bedroom_lamp.name}}</h2>
+                <p>{{bedroom_lamp.type}}</p>
+                <p>{{bedroom_lamp}}</p>
 
-            angular.module( 'YourApp', [ 'ngMaterial' ] )
-                .controller("YourController", YourController );
+                <div class="md-actions" layout="row" layout-align="end">
+                    <md-checkbox ng-model="bedroom_lamp.state.powered">Power</md-checkbox>
+                    <md-slider ng-model="bedroom_lamp.state.brightness" min="0" max="1" step=".05" name="brightness">
+                        Brightness
+                    </md-slider>
+                </div>
 
-        </script>
+            </md-card-content>
+        </md-card>
 
-    </body>
+    </div>
+
+    <script src="/static/angular/angular.js"></script>
+    <script src="/static/angular-aria/angular-aria.js"></script>
+    <script src="/static/angular-animate/angular-animate.js"></script>
+    <script src="/static/angular-material/angular-material.js"></script>
+    <script src="/src/assets/js/controllers.js"></script>
+
+</body>
+
 </html>
