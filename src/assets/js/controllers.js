@@ -12,6 +12,7 @@ var DeviceApp = angular.module('DeviceApp', ['ngMaterial'])
 
             });
 
+            // TODO: Add a debouncer
             $scope.$watch("bedroom_lamp", function(newValue, oldValue) {
                 if ($scope.bedroom_lamp.state){
                     console.log("watch!");
