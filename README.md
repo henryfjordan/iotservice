@@ -11,3 +11,7 @@ The device shadows are implemented using Hapi and RethinkDB to provide an API by
 There are callbacks built into the device models that run on state change.
 
 Currently, adding/modifying devices is a manual task.
+
+# IoT aaS
+
+This is the code behind my service IoT aaS. It provides an API to track device state.

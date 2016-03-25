@@ -3,7 +3,7 @@ module.exports = [
         method: 'GET',
         path: '/',
         handler: {
-            file: 'src/assets/html/index.html'
+            file: 'site/assets/html/index.html'
         }
     },
     {
@@ -26,10 +26,10 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/src/{file*}',
+        path: '/site/{file*}',
         handler: {
             directory: {
-                path: 'src/'
+                path: 'site/'
             }
         }
     }

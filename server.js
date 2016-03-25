@@ -1,9 +1,9 @@
 var Hapi = require('hapi');
 var Path = require('path');
 
-var device_routes = require('./src/routes/device');
-var site_routes = require('./src/routes/site');
-var devices = require('./src/devices');
+var device_routes = require('./app/routes/device');
+var site_routes = require('./app/routes/site');
+var devices = require('./app/devices');
 
 
 /* Device watchers */
