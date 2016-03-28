@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "An IoT stack implementation",
   "main": "src/index.js",
+  "repository": "http://github.com/henryfjordan/iotservice.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,8 +11,12 @@
   "license": "MIT",
   "dependencies": {
     "hapi": "^11.0.0",
+    "hapi-auth-basic": "^4.1.0",
+    "hapi-auth-basic-key": "^4.1.0-key",
+    "hapi-rethinkdb": "^2.0.1",
     "inert": "^3.1.0",
     "js-schema": "^1.0.1",
+    "node-uuid": "^1.4.7",
     "request": "^2.65.0",
     "rethink-migrate": "^1.2.2",
     "rethinkdb": "^2.2.2"

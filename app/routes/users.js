@@ -1,19 +1,22 @@
 var shema = require('js-schema');
+var uuid = require('node-uuid');
 
-// Get list of devices
-var devices = require('../devices');
+var userSchema = schema({
+    name: String.of('a-zA-z '),
+    email: String
+})
 
 module.exports = [
     {
-        /* Return a list of all devices */
+        /* Return a list of all users */
         method: 'GET',
-        path: '/device',
+        path: '/users',
         handler: function(request, reply) {
 
             var r = request.server.plugins['hapi-rethinkdb'].rethinkdb;
             var localhost = request.server.plugins['hapi-rethinkdb'].connection;
 
-            r.table('devices')
+            r.table('users')
             .run(localhost, function(err, cursor) {
                 if (err) throw err;
                 cursor.toArray(function(err, result) {
@@ -25,68 +28,95 @@ module.exports = [
         }
     },
     {
-        /* Return a list of all devices of a type */
+        /* Return a specific user */
         method: 'GET',
-        path: '/device/{type}',
+        path: '/users/{id}',
         handler: function (request, reply) {
 
             var r = request.server.plugins['hapi-rethinkdb'].rethinkdb;
             var localhost = request.server.plugins['hapi-rethinkdb'].connection
 
-            r.db('iotservice').table('devices')
-            .filter({type: request.params.type})
+            r.table('users')
+            .get(request.params.id)
             .run(localhost, function(err, cursor) {
                 if (err) reply(err);
-                cursor.toArray(function(err, result) {
-                    if (err) reply(err);
-                    reply(JSON.stringify(result, null, 2));
-                });
-            });
 
-        }
-    },
-    {
-        /* Return a specific device */
-        method: 'GET',
-        path: '/device/{type}/{name}',
-        handler: function (request, reply) {
-
-            var r = request.server.plugins['hapi-rethinkdb'].rethinkdb;
-            var localhost = request.server.plugins['hapi-rethinkdb'].connection
-
-            r.db('iotservice').table('devices')
-            .get(request.params.name)
-            .run(localhost, function(err, cursor) {
-                if (err) reply(err);
                 if (cursor) {
                     reply(cursor);
                 } else {
                     reply("Not Found").code(404);
                 }
+
             });
+
         }
     },
     {
-        /* Update a specific device */
+        /* Create a user */
         method: 'POST',
-        path: '/device/{device}/{name}',
+        path: '/users',
         handler: function (request, reply) {
 
             var r = request.server.plugins['hapi-rethinkdb'].rethinkdb;
             var localhost = request.server.plugins['hapi-rethinkdb'].connection
 
             // Return bad request if payload doesn't validate
-            if (!devices[request.params.device].schema(request.payload)) {
+            if (!userSchema(request.payload)) {
                 reply("Bad Payload").code(400);
                 return;
             }
 
-            r.db('iotservice').table('devices')
-            .filter({name: request.params.name})
-            .update({
-                state: request.payload,
-                last_updated: r.now()
-            })
+            user = request.payload;
+            user.key = uuid.v4();
+
+            r.table('users')
+            .insert(request.payload)
+            .run(localhost, function(err, cursor) {
+                if (err) reply(err);
+                reply(cursor);
+            });
+
+        }
+    },
+    {
+        /* edit a user */
+        method: 'PUT',
+        path: '/users/{id}',
+        handler: function (request, reply) {
+
+            var r = request.server.plugins['hapi-rethinkdb'].rethinkdb;
+            var localhost = request.server.plugins['hapi-rethinkdb'].connection
+
+            // Return bad request if payload doesn't validate
+            if (!userSchema(request.payload)) {
+                reply("Bad Payload").code(400);
+                return;
+            }
+
+            r.table('users')
+            .get(request.params.id)
+            .update(request.payload)
+            .run(localhost, function(err, cursor) {
+                if (err) reply(err);
+                reply(cursor);
+            });
+
+        }
+    },
+    {
+        /* delete a user */
+        method: 'DELETE',
+        path: '/users/{id}',
+        handler: function (request, reply) {
+
+            var r = request.server.plugins['hapi-rethinkdb'].rethinkdb;
+            var localhost = request.server.plugins['hapi-rethinkdb'].connection
+
+
+            console.log(request.params.id)
+            r.table('users')
+            .get(request.params.id)
+            .delete()
             .run(localhost, function(err, cursor) {
                 if (err) reply(err);
                 reply(cursor);
